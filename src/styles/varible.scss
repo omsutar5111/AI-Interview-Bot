@@ -1,0 +1,9 @@
+$primary-color: #005dac;
+$bot-message-color: #e9ecef;
+$white-color: #fff;
+$black-color: black;
+$gray:#eee;
+
+//function for footer darker than existing 
+$primary-color-darker: darken($primary-color, 5%);
+$primary-color-lighter: lighten($primary-color, 15%);

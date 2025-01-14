@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'AiInterviewBot' title`, () => {
+  it(`should have the 'ChatBot' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('AiInterviewBot');
+    expect(app.title).toEqual('ChatBot');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, AiInterviewBot');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, ChatBot');
   });
 });

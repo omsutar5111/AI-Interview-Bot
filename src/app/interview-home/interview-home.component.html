@@ -1,0 +1,32 @@
+<div class="landing-page">
+    <h2>Schedule Your Interview</h2>
+    <form>
+      <label for="language">Select your programming language:</label>
+      <select [(ngModel)]="language" name="language" id="language">
+        <option value="" disabled selected>Select a language</option>
+        <option value="java">Java</option>
+        <option value="python">Python</option>
+        <option value="javascript">JavaScript</option>
+        <option value="cpp">C++</option>
+      </select>
+  
+      <label for="timeSlot">Select available time slot:</label>
+      <select [(ngModel)]="timeSlot" name="timeSlot" id="timeSlot">
+        <option value="" disabled selected>Select a time slot</option>
+        <option value="10-1">10 AM - 1 PM</option>
+        <option value="3-5">3 PM - 5 PM</option>
+      </select>
+  
+      <label for="email">Enter your email ID:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="yourname@example.com"
+      />
+  
+      <button [disabled]="!isFormValid()" (click)="submitForm()">Submit</button>
+    </form>
+  </div>
+  

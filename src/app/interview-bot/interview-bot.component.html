@@ -1,0 +1,62 @@
+
+<!-- <div *ngIf="warningMessage" class="warning">
+  {{ warningMessage }}
+  <button (click)="requestFullScreen()">Return to Full-Screen</button>
+</div> -->
+<div *ngIf="warningMessage" class="warning">{{ warningMessage }}</div>
+<div class="nav">
+    <div class="bot-title"><img src="./../../assets/images/interviewBot.webp" class="bot" >
+      BTS SmartRecruit</div>
+    <div class="timer"> Time Left:<span class="date">{{ getFormattedTime()  }}</span> </div>
+ 
+</div>
+<div class="interview-page">
+    <div class="left-column">
+      <div class="code-editor">
+        <div class="editor-toolbar">
+          <button class="btn">File</button>
+          <button class="btn">Edit</button>
+          <button class="btn">View</button>
+          <button class="btn">Run</button>
+        </div>
+   
+        <div class="editor-container">
+          <textarea type="text" [(ngModel)]="userCode" class="code-area" placeholder="Write your code here..."></textarea>
+        </div>
+        <div>
+          <button class="submit-btn" (click)="onCodeSubmit(userCode)">Submit</button>
+          <button class="reset-btn">Reset</button>
+        </div>
+      </div>
+
+      
+      
+    </div>
+ 
+      <div class="right-column">
+        <div *ngIf="isVideoVisible" id="video-container" class="video-container">
+          <video #videoElement autoplay></video>
+          <!-- <div class="controls">
+            <button (click)="minimizeVideo()">Minimize</button>
+            <button (click)="closeVideo()">Close</button>
+          </div> -->
+     
+        </div>
+       
+        <div class="chat-box" #msgSection>
+          <!-- <div *ngFor="let Botmessage of botMessages" class="message">{{ Botmessage }}</div>
+          <div *ngFor="let Usermessage of userMessages" class="userMessage">{{ Usermessage }}</div> -->
+          <div
+          *ngFor="let msg of conversation"
+          [ngClass]="{ 'message': msg.type === 'bot', 'userMessage': msg.type === 'user' }">
+          {{ msg.message }}
+        </div>
+        </div>
+        <div class="chat-input">
+          <input type="text" [(ngModel)]="userMessage" placeholder="Type your message..." class="input" />
+          <button (click)="sendMessage()"  (keydown.enter)="sendMessage()">Send</button>
+        </div>
+  
+      </div>
+    </div>
+
