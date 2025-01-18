@@ -1,0 +1,10 @@
+<div class="dialog-overlay" *ngIf="isVisible">
+    <div class="dialog-box">
+      <h3>Are you sure?</h3>
+      <p>Do you really want to end the interview? This action cannot be undone.</p>
+      <div class="dialog-buttons">
+        <button class="confirm-btn" (click)="confirm()">Yes</button>
+        <button class="cancel-btn" (click)="cancel()">No</button>
+      </div>
+    </div>
+  </div>

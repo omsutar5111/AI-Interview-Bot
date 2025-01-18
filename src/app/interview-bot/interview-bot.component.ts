@@ -1,18 +1,26 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { CommonModule, UpperCasePipe } from '@angular/common';
+import { Component, ElementRef, EventEmitter, HostListener, NgZone, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SpeechService } from './speech.service';
-
+import { Router } from '@angular/router';
+import { FormDataService } from '../interview-home/form-data.service';
+import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
+declare var webkitSpeechRecognition: new () => any;
 @Component({
   selector: 'app-interview-bot',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule,DialogBoxComponent],
   templateUrl: './interview-bot.component.html',
   styleUrl: './interview-bot.component.scss'
 })
 export class InterviewBotComponent {
   @ViewChild('msgSection') msgSection!: ElementRef;
   @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
+  @ViewChild('confirmationDialog') confirmationDialog!: DialogBoxComponent;
+  isVisible = false;
+ 
+  @Output() confirmed = new EventEmitter<void>();
+  @Output() cancelled = new EventEmitter<void>();
   isVideoVisible = true;
 
   counter: number = 1800;
@@ -20,41 +28,110 @@ export class InterviewBotComponent {
   timer: any;
   warningMessage: string = '';
   isFullScreen: boolean = false;
+  stopSpeak:boolean=false;
 
 
-  constructor(private _Speech_Service:SpeechService) {
+  //voice parameters
+  results: any;
+  isListening: boolean = false;
+  speechResultsInProgress: boolean = false;
+  speechResults: any;
+  openVoicePannel: boolean = false;
+
+  formData: any;
+  userName: any = '';
+  intervieweName: string = "omkar";
+  constructor(private _Speech_Service: SpeechService, private zone: NgZone, private router: Router, private formservice: FormDataService) {
+    //  this.zone=zone;
     // this.requestFullScreen();
-    this.startTimer();
-    // this.startVideo();
-    this.speakQuestion();
- 
-  }
-  conversation: { type: 'bot' | 'user'; message: string }[] = [
-    { type: 'bot', message: 'Welcome to the interview!' }
-  ];
-  botMessages: string[] = ['Welcome to the interview!'];
-  userMessages: string[] =[];
-  sessionId: string = '';
-  userMessage='';
-  userCode='';
+    this.formData = formservice.getFormData();
+    setTimeout(() => {
+      this.userName = this.formData.name
+      console.log(this.userName);
+      // this.intervieweName=this.userName as string
+      console.log(this.intervieweName);
+      // Allow for DOM update
+      this.conversation.push(
+        { type: 'bot', message: `Welcome to the interview! ${this.userName}`+". Please say 'Hi' to start The interview" }
+      )
+      this.botMessages.push(
+        `Welcome to the interview! ${this.userName}` +". Please say 'Hi' to start The interview."
+      )
+      this.speakQuestion();
+      this.startTimer();
+    }, 2000);
 
-  // ngOnInit(){
-  
-  // }
+    this.startVideo();
+
+    // this.speakQuestion();
+
+
+
+
+
+  }
+
+  conversation: { type: 'bot' | 'user'; message: string }[] = [];
+  botMessages: string[] = [];
+  userMessages: string[] = [];
+  sessionId: string = '';
+  userMessage = '';
+  userCode = '';
+
+  ngOnInit() {
+    const navigation = this.router.getCurrentNavigation();
+    const formData = navigation?.extras.state?.['formData'];
+    console.log('Received form data:', formData);
+  }
+
+
+  onEndInterview(): void {
+    this.confirmationDialog.open();
+  }
+ 
+  endInterview(): void {
+    console.log('Interview ended');
+// Add your logic to end the interview here
+  }
+ 
+  cancelEndInterview(): void {
+    console.log('End interview cancelled');
+  }
+  resetCode(){
+    this.userCode='';
+  }
   sendMessage() {
-  
+
     this.userMessages.push(this.userMessage);
     console.log(this.userMessage);
-    if (this.conversation[this.conversation.length-1]) {
+    
+
+    if (this.conversation[this.conversation.length - 1]) {
       this.conversation.push({ type: 'user', message: this.userMessage });
       // this.messages.push(`${this.userMessage}`);
       // this.userMessages.push(`${this.userMessage}`);
+      
       this.getAIResponse(this.userMessage);
-    
+      
     }
+    this.userMessage='';
   }
 
-  
+  sendMessageVoice(userInput?: any) {
+
+  }
+
+  stopVoice(){
+    if(!this.stopSpeak){
+      this.stopSpeak=true;
+      this._Speech_Service.stopListening();
+    }
+    this.stopSpeak=false;
+   
+
+  }
+
+
   scrollToBottom() {
     try {
       this.msgSection.nativeElement.scrollTop = this.msgSection.nativeElement.scrollHeight;
@@ -74,14 +151,14 @@ export class InterviewBotComponent {
   }
 
   stopListening(): void {
-    this._Speech_Service.stopListening();
+    this._Speech_Service.stopSpeaking();
   }
 
-  onCodeSubmit(userCode:any){
-      //  const payload={question:this.messages[this.messages.length-1],session_id:this.sessionId};
-      const payload = { question: userCode, session_id: this.sessionId };
-      this.getAnswerFromBot(payload);
-      this.userCode='';
+  onCodeSubmit(userCode: any) {
+    //  const payload={question:this.messages[this.messages.length-1],session_id:this.sessionId};
+    const payload = { question: userCode, session_id: this.sessionId };
+    this.getAnswerFromBot(payload);
+    this.userCode = '';
 
   }
 
@@ -97,27 +174,27 @@ export class InterviewBotComponent {
       }
     }, 1000);
   }
-  
+
   getFormattedTime(): string {
     const minutes = Math.floor(this.counter / 60);
     const seconds = this.counter % 60;
     return `${this.padZero(minutes)}:${this.padZero(seconds)}`;
   }
-  
+
   padZero(value: number): string {
     return value < 10 ? `0${value}` : `${value}`;
   }
 
-  getAIResponse(userMessage:any) {
-   
+  getAIResponse(userMessage: any) {
+
     const payload = { question: userMessage, session_id: this.sessionId };
     this.getAnswerFromBot(payload);
-  
+
   }
 
-  getAnswerFromBot(payload:any){
-     
-    this._Speech_Service.getAnswer( payload).subscribe((response: any) => {
+  getAnswerFromBot(payload: any) {
+
+    this._Speech_Service.getAnswer(payload).subscribe((response: any) => {
       this.sessionId = response.session_id;
       const aiResponse = response.answer;
       this.conversation.push({ type: 'bot', message: aiResponse });
@@ -134,15 +211,15 @@ export class InterviewBotComponent {
 
   startVideo() {
     navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-      const video = this.videoElement.nativeElement;
-      video.srcObject = stream;
-      video.play();
-    })
-    .catch(err => {
-      console.error('Error accessing the camera: ', err.message);
-      alert('Could not access your camera. Please check your settings.');
-    });
+      .then(stream => {
+        const video = this.videoElement.nativeElement;
+        video.srcObject = stream;
+        video.play();
+      })
+      .catch(err => {
+        console.error('Error accessing the camera: ', err.message);
+        alert('Could not access your camera. Please check your settings.');
+      });
   }
 
   minimizeVideo() {
@@ -155,6 +232,73 @@ export class InterviewBotComponent {
     stream.getTracks().forEach(track => track.stop());
     video.srcObject = null;
     this.isVideoVisible = false;
+  }
+
+  startListeningVoice() {
+
+    console.log('here');
+    if (!this.isListening) {
+      // this.isListening = true;
+      this.openVoicePannel = true;
+      if (this.openVoicePannel == true) {
+        this.isListening = true;
+        this.results = undefined;
+        console.log('this.isListening: ', this.isListening);
+
+        if ('webkitSpeechRecognition' in window) {
+          const vSearch = new webkitSpeechRecognition();
+          vSearch.continuous = false;
+          vSearch.interimresults = false;
+          vSearch.lang = 'en-US';
+          vSearch.start();
+          vSearch.onresult = (e: any) => {
+            console.log(e);
+            this.results = e.results[0][0].transcript;
+            this.getSpeechResults();
+            vSearch.stop();
+            this.zone.run(() => {
+              // this.isListening = false;
+              this.stopListeningVoice();
+              console.log('this.isListening: ', this.isListening);
+            });
+            console.log('this.isListening: ', this.isListening);
+          };
+          vSearch.onaudioend = (e: any) => {
+            this.zone.run(() => {
+              // this.isListening = false;
+              this.stopListeningVoice();
+              console.log('this.isListening: ', this.isListening);
+            });
+            console.log(e);
+          };
+        } else {
+          alert('Your browser does not support voice recognition!');
+        }
+
+      }
+      else {
+        this.isListening = false;
+        console.log('this.isListening: ', this.isListening);
+      }
+
+    }
+  }
+  stopListeningVoice() {
+    this.isListening = false;
+
+    this.openVoicePannel = false;
+  }
+
+  getSpeechResults() {
+    this.speechResultsInProgress = true;
+    console.log(this.results);
+    // this.userInput = this.results;
+    console.log('this.isListening: ', this.isListening);
+    this.userMessage = this.results;
+    // this.sendMessage(this.results);
+    // this.speechResultsInProgress = false;
+    // this.openVoicePannel = false; // Move this line here
+
   }
 
   // @HostListener('document:visibilitychange', [])

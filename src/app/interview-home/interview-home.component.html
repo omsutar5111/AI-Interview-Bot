@@ -1,32 +1,43 @@
-<div class="landing-page">
-    <h2>Schedule Your Interview</h2>
-    <form>
-      <label for="language">Select your programming language:</label>
-      <select [(ngModel)]="language" name="language" id="language">
-        <option value="" disabled selected>Select a language</option>
-        <option value="java">Java</option>
-        <option value="python">Python</option>
-        <option value="javascript">JavaScript</option>
-        <option value="cpp">C++</option>
-      </select>
+
+<div class="body">
+  <div class="card form-card">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h2 >Applicant Form</h2>
   
-      <label for="timeSlot">Select available time slot:</label>
-      <select [(ngModel)]="timeSlot" name="timeSlot" id="timeSlot">
-        <option value="" disabled selected>Select a time slot</option>
-        <option value="10-1">10 AM - 1 PM</option>
-        <option value="3-5">3 PM - 5 PM</option>
-      </select>
+      <label for="name">Enter Your Name:</label>
+      <input id="name" type="text" formControlName="name" placeholder="Your Name" />
+      <div *ngIf="form.controls['name'].invalid && form.controls['name'].touched">
+        <small class="error">Name is required.</small>
+      </div>
   
-      <label for="email">Enter your email ID:</label>
+      <label for="email">Enter Your Email ID:</label>
+      <input id="email" type="email" formControlName="email" placeholder="Your Email" />
+      <div *ngIf="form.controls['email'].invalid && form.controls['email'].touched">
+        <small *ngIf="form.controls['email'].errors?.['required']"  class="error">Email is required.</small>
+        <small *ngIf="form.controls['email'].errors?.['email']"  class="error">Enter a valid email address.</small>
+      </div>
+      <small style="color: white;">(This email will be used for future communication)</small>
+  
+      <label for="mobile">Enter 10-Digit Mobile No.:</label>
+      <input id="mobile" type="text" formControlName="mobile" placeholder="Your Mobile Number" />
+      <div *ngIf="form.controls['mobile'].invalid && form.controls['mobile'].touched">
+        <small *ngIf="form.controls['mobile'].errors?.['required']"  class="error">Mobile number is required.</small>
+        <small *ngIf="form.controls['mobile'].errors?.['pattern']" class="error">Enter a valid 10-digit mobile number.</small>
+      </div>
+  
+      <label for="resume">Upload Your Resume:</label>
       <input
-        type="email"
-        id="email"
-        name="email"
-        [(ngModel)]="email"
-        placeholder="yourname@example.com"
+        id="resume"
+        type="file"
+        formControlName="resume"
+        (change)="onFileChange($event)"
+        accept=".pdf,.txt,.doc,.docx"
       />
-  
-      <button [disabled]="!isFormValid()" (click)="submitForm()">Submit</button>
+      <div *ngIf="resumeError">
+        <small class="error">{{ resumeError }}</small>
+      </div>
+    
+      <button type="submit" class="button-primary" [disabled]="form.invalid || resumeError">Submit</button>
     </form>
   </div>
-  
+</div>

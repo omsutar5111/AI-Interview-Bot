@@ -1,8 +1,0 @@
-{
-  "name": "dev",
-  "serviceBaseUrls": {
-    "DOMAIN01": "http://localhost:8000",
-    "AEMURL": "https://apis.npu.bfsgodirect.com"
-  },
-  "adobeAnalytics": "//assets.adobedtm.com/5fc97671c230/cd5e6eefeb83/launch-a54325503df1-development.min.js"
-}

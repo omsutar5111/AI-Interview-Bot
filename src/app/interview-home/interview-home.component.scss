@@ -1,0 +1,203 @@
+/* Global SCSS Variables */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+:root {
+    --primary-color: #1A73E8;
+    /* Bright Blue */
+    --primary-light: #64b5f6;
+    --primary-dark: #0d47a1;
+    --secondary-color: #00A676;
+    /* Vibrant Green */
+    --secondary-light: #66bb6a;
+    --secondary-dark: #1b5e20;
+    --accent-color: #FFC107;
+    /* Subtle Gold */
+    --accent-light: #ffe082;
+    --accent-dark: #ffa000;
+    --background-color: #F4F6F9;
+    /* Light Gray */
+    --surface-color: #FFFFFF;
+    /* White */
+    --text-color: #212121;
+    /* Dark Gray */
+    --text-color-light: #757575;
+    /* Light Gray for Text */
+    --font-family: 'Roboto', sans-serif;
+    --font-size-base: 16px;
+    --font-size-heading: 24px;
+    --font-size-subheading: 18px;
+    --line-height: 1.5;
+}
+
+
+
+/* General Styles */
+.body {
+    font-family: 'Poppins',sans-serif;
+    width: 100%; /* Adjust width as needed */
+    height: 100vh; /* Full viewport height */
+    background-image: url('/assets/images/p.webp');
+    background-size: cover; /* Ensures the image covers the entire container */
+    // background-position: center; /* Centers the image */
+    background-repeat: no-repeat;
+    // font-family: var(--font-family);
+    // font-size: var(--font-size-base);
+    // color: var(--text-color);
+    // background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+
+/* Toolbar */
+mat-toolbar {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: var(--font-size-heading);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+.button-primary {
+    background-color: var(--primary-dark);
+    color: black;
+    border-radius: 4px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+        background-color: black;
+        transform: scale(1.05);
+        color: white;
+    }
+}
+
+.button-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+}
+
+/* Card Component */
+.card {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    top:20px;
+    backdrop-filter: blur(10px);
+    background-color: rgb(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 6px rgba(200, 212, 212, 0.1);
+    //  transition: box-shadow 0.3s ease;
+
+    // &:hover {
+    //     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    // }
+}
+
+
+
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.form-card {
+    width: 500px;
+    min-width: 500px;
+    // max-width: auto;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    // background-color: #448e98;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    font-size: var
+    (--font-size-heading);
+    font-weight: 300;
+}
+
+label {
+    text-align: left;
+    display: flex;
+    margin: 10px 0 5px;
+    font-weight: 500;
+    color: white;
+    font-size: small;
+
+}
+
+input {
+    // appearance: none;
+    width: 100%;
+    padding: 10px;
+    box-shadow: none;
+    border: 2px solid #AAAAAA;
+    border-radius: 4px;
+    font-size: var(--font-size-base);
+    margin-bottom: 6px;
+    background-color: #AAAAAA;
+
+    &:invalid {
+        border-color: red;
+        border: 2px solid red;
+        outline: none;
+        color: white;
+        font-weight: 400;
+        background-color: #FFC0CB11;
+    }
+    
+    &:focus{
+        border-color: #FFC0CB;
+        border: 2px solid #FFC0CB;
+        outline: none;
+        color: white;
+        font-weight: 400;
+        background-color: #FFC0CB11;
+    }
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    backdrop-filter: blur(10px);
+    background-color: black;
+    color: black;
+    font-size: var(--font-size-base);
+    border: 1ps solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    // transition: background-color 0.3s ease;
+
+    // &:hover {
+    //     background-color: var(--primary-dark);
+    // }
+
+    &:disabled {
+        background-color: #ECECEC;
+        cursor: not-allowed;
+    }
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    font-weight: 700;
+}

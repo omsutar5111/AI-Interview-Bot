@@ -34,6 +34,11 @@ export class SpeechService {
     const utterance = new SpeechSynthesisUtterance(text);
     this.speechSynthesis.speak(utterance);
   }
+  stopSpeaking(): void {
+    if (this.speechSynthesis.speaking) {
+      this.speechSynthesis.cancel(); // Stops the current speech
+    }
+  }
 
   startListening(onResult: (transcript: string) => void): void {
     this.speechRecognition.onresult = (event: any) => {
@@ -61,7 +66,7 @@ export class SpeechService {
     //   "question":question,
     //   "session_id":sessionId
     // }
-    const url='http://localhost:8000/v1/policybot/query'
+    const url='http://localhost:8000/v1/interviewbot/query'
     return this.http.post(url,payload);
   }
 }

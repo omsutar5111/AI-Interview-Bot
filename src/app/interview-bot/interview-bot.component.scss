@@ -1,277 +1,581 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 $editor-bg-color: #1e1e1e;
 $editor-text-color: #d4d4d4;
 $toolbar-bg-color: #2d2d30;
 $toolbar-btn-color: #d4d4d4;
+$btn-bg-submit: #4caf50; // Green for Submit
+$btn-bg-reset: #f57c00; // Orange for Reset
+$btn-text-color: white;
+$btn-hover-opacity: 0.9;
+$btn-active-scale: 0.95;
+$btn-radius: 5px;
+$btn-padding: 10px 20px;
 
+.body {
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  /* Adjust width as needed */
+  height: 100vh;
+  /* Full viewport height */
+  background-image: url('/assets/images/p.webp');
+  background-size: cover;
+  /* Ensures the image covers the entire container */
+  // background-position: center; /* Centers the image */
+  background-repeat: no-repeat;
+}
 
 .landing-page {
-    text-align: center;
-  }
+  text-align: center;
+}
 
-  .nav{
-    background-color: #d1c4e9;
-    padding: 10px;
-    // margin: 10px;
+.nav {
+  backdrop-filter: blur(10px);
+  background-color: #d1c4e944;
+  padding: 10px;
+  // margin: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .logo {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    .bot-title{
-       color: white;
-       background-color: #007bff;
-       border: 2px solid black;
-       padding: 5px;
-      .bot{
-        height: 40px;
-        width: auto;
-     
-  
-      }
-      }
- 
-    .timer{
-      color: black;
-      font-size: medium;
-     
-      // margin-right: 1px;
-      .date{
-        padding: 5px;
-        color: red;
-      }
-    }
-  }
-  
-  .interview-page {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    
-  }
-  
-  .left-column {
-    position: relative;
-    background-color: black;
-    color: orangered;
-    border: yellow solid 2px;
-    height: auto;
-    width: 60%;
-    min-height: 400px;
-    margin: 10px;
-    padding: 10px;
-    .code-editor {
-      width: 100%;
-      height: 80vh;
-      background-color: $editor-bg-color;
-      display: flex;
-      flex-direction: column;
-    
-      .editor-toolbar {
-        background-color: $toolbar-bg-color;
-        padding: 10px;
-        display: flex;
-        justify-content: flex-start;
-    
-        .btn {
-          background-color: transparent;
-          color: $toolbar-btn-color;
-          border: none;
-          padding: 8px 12px;
-          font-size: 14px;
-          cursor: pointer;
-    
-          &:hover {
-            background-color: lighten($toolbar-bg-color, 5%);
-          }
-        }
-   
-      }
-    
-      .editor-container {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-     
-        .code-area {
-          width: 100%;
-          height: 100%;
-          background-color: $editor-bg-color;
-          color: $editor-text-color;
-          font-family: 'Consolas', monospace;
-          font-size: 16px;
-          padding: 20px;
-          border: none;
-          outline: none;
-          resize: none;
-        }
-      }
-      .submit-btn{
-        position: relative;
-        left: 80%;
-        background-color: orange;
-        color: #1e1e1e;
-        padding: 8px 12px;
-        font-size: 14px;
-        border: solid white 2px;
-        border-radius: 3px;
-        cursor: pointer;
-        &:hover {
-          background-color: lighten(white, 5%);
-        }
-      }
-      .reset-btn{
-        position: relative;
-        left: 50%;
-        background-color: orange;
-        color: #1e1e1e;
-        padding: 8px 12px;
-        font-size: 14px;
-        border: solid white 2px;
-        border-radius: 3px;
-        cursor: pointer;
-        &:hover {
-          background-color: lighten(white, 5%);
-        }
-      }
-    }
-  }
+    // margin: auto;
+    // justify-content: center;
 
- 
-    
-    
-  .right-column {
-    padding: 10px;
-    position: relative;
-    margin: 10px 50px 10px 0px;
-    min-height: 400px;
-    width: 40%;
-    // height: 400px;
-    background-color: black;
-    color: white;
-
-    .video-container {
-      position: relative;
-      // bottom: 10px;
-      // top: 20px;
-      // left:30%;
-      width:50%;
-      height: 100px;
-      border: 1px solid yellowgreen;
-      margin-bottom: 5px;
-      background: #000;
-      z-index: 1000;
-    }
-    
-    .video-container video {
-      width: 100%;
-      height: 100%;
-    }
-    
-    .video-container .controls {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+    .bot {
       display: flex;
-      justify-content: space-around;
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
-      padding: 2px;
-    }
-    
-  
-    .chat-box {
-      min-height: 300px;
-      width: 100%;
-      max-height: 300px;
-      overflow-y: auto;
-      padding: 10px;
-       background-color: black;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      .message{
-        text-align: left;
-        background-color: #e0f7fa;
-        padding: 10px;
-        margin: 5px 0;
-        border-radius: 10px;
-        color: black;
-      }
-      .userMessage{
-        text-align: right;
-        background-color: #d1c4e9;
-        color: black;
-        padding: 10px;
-        margin: 5px 0;
-        border-radius: 10px;
-      }
-    }
-
-    .chat-input {
-      display: flex;
+      flex-direction: row;
+      align-items: center;
       margin: 10px;
+      height: 32px;
+      width: auto;
+      color: white;
+    }
+  
+    .bot-title {
+      color: white;
+      background-color: transparent;
+      //  border: 2px solid black;
+      //  padding: 5px;
+    }
+  }
 
-      .input{
+  .end-interview{
+    background-color: #ff4d4f; // Red background for urgency
+  color: white; // White text color for contrast
+  font-size: 16px; // Medium font size for readability
+  font-weight: bold; // Bold text for emphasis
+  padding: 10px 20px; // Comfortable padding for a large button
+  border: none; // Remove default border
+  border-radius: 5px; // Slightly rounded corners
+  cursor: pointer; // Pointer cursor to indicate clickability
+  transition: background-color 0.3s ease, transform 0.2s ease; // Smooth hover effects
+ 
+  &:hover {
+    background-color: #d9363e; // Slightly darker red on hover
+    transform: scale(1.05); // Slight zoom effect
+  }
+ 
+  &:active {
+    background-color: #b02a2e; // Even darker red when clicked
+    transform: scale(1); // Return to normal scale
+  }
+  }
+
+  .timer {
+    color: white;
+    font-weight: 400;
+    font-size: medium;
+
+    // margin-right: 1px;
+    .date {
+      padding: 5px;
+      color: red;
+    }
+  }
+}
+
+.interview-page {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.left-column {
+  position: relative;
+  background-color: black;
+  color: orangered;
+  border: #FFC0CB solid 2px;
+  height: auto;
+  width: 60%;
+  min-height: 400px;
+  margin: 10px;
+  padding: 10px;
+
+  .code-editor {
+    width: 100%;
+    height: 80vh;
+    background-color: $editor-bg-color;
+    display: flex;
+    flex-direction: column;
+
+    .editor-toolbar {
+      background-color: $toolbar-bg-color;
+      padding: 10px;
+      display: flex;
+      justify-content: flex-start;
+
+      .btn {
+        background-color: transparent;
+        color: $toolbar-btn-color;
+        border: none;
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: lighten($toolbar-bg-color, 5%);
+        }
+      }
+
+    }
+
+    .editor-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .code-area {
         width: 100%;
-        padding: 10px;
+        height: 100%;
+        background-color: $editor-bg-color;
+        color: $editor-text-color;
+        font-family: 'Consolas', monospace;
+        font-size: 16px;
+        padding: 20px;
         border: none;
         outline: none;
-        background-color: #1e1e1e;
-        color: white;
+        resize: none;
+      }
+    }
+
+    .btn-container{
+      display: flex;
+      // flex-direction: co;
+      // align-items:flex-end;
+      justify-content: center;
+    }
+
+    .submit-btn,
+    .reset-btn {
+    
+      margin: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      color: $btn-text-color;
+      padding: $btn-padding;
+      border: none;
+      border-radius: $btn-radius;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+     
+      &:hover {
+        opacity: $btn-hover-opacity; // Slight transparency on hover
+        transform: scale(1.05); // Slight zoom effect
+      }
+     
+      &:active {
+        transform: scale($btn-active-scale); // Shrinks slightly on click
+      }
+    }
+     
+    // Specific styles for Submit Button
+    .submit-btn {
+      background-color: $btn-bg-submit;
+     
+      &:hover {
+        background-color: lighten($btn-bg-submit, 5%); // Slightly lighter green on hover
+      }
+     
+      &:active {
+        background-color: darken($btn-bg-submit, 5%); // Slightly darker green on active
+      }
+    }
+     
+    // Specific styles for Reset Button
+    .reset-btn {
+      background-color: $btn-bg-reset;
+     
+      &:hover {
+        background-color: lighten($btn-bg-reset, 5%); // Slightly lighter orange on hover
+      }
+     
+      &:active {
+        background-color: darken($btn-bg-reset, 5%); // Slightly darker orange on active
       }
     }
   }
-  
-
-  
+}
 
 
-  
-  .voice-animation {
-    text-align: center;
+
+
+.right-column {
+  padding: 10px;
+  position: relative;
+  margin: 10px 50px 10px 0px;
+  min-height: 400px;
+  width: 40%;
+  // height: 400px;
+  background-color: black;
+  color: white;
+  .base-container{
+       display: flex;
+       flex-direction: row;
+       justify-content: space-between;
+  }
+  .mic-icon{
+    margin: 10px;
+    padding: 5px;
+    background-color: white;
+    cursor: pointer;
+  }
+  .video-container {
+
+    width: 50%;
+    height: 100px;
+    border: 1px solid yellowgreen;
+    margin-bottom: 5px;
+    background: #000;
+    z-index: 1000;
+  }
+
+  .video-container video {
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-container .controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 2px;
+  }
+
+
+  .chat-box {
+    min-height: 300px;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    backdrop-filter: blur(10px);
+    background-color: rgb(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+
+    //  background-color: black;
+    // border: 1px solid #ccc;
+    // border-radius: 5px;
+    .message {
+      text-align: left;
+      background-color: #e0f7fa;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 10px;
+      color: black;
+    }
+
+    .userMessage {
+      text-align: right;
+      background-color: #d1c4e9;
+      color: black;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 10px;
+    }
+  }
+
+  .chat-input {
+    display: flex;
+    margin: 10px;
+
+    .input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      outline: none;
+      background-color: #1e1e1e;
+      color: white;
+    }
+  }
+}
+
+
+
+
+
+
+.voice-animation {
+  text-align: center;
+
+}
+
+.animation {
+  width: 50px;
+  height: 50px;
+  background: #007bff;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+.warning {
+  display: block;
+  color: red;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  animation: fadeOut 5s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.sendVoice {
+  padding: 5px;
+  height: 20px;
+  width: auto;
+  cursor: pointer;
+}
+
+//dialog box
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
  
+// Dialog Box
+.dialog-box {
+  background: white;
+  border-radius: 8px;
+  padding: 20px 30px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+ 
+  h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #333;
   }
-  
-  .animation {
-    width: 50px;
-    height: 50px;
-    background: #007bff;
-    border-radius: 50%;
-    animation: pulse 1s infinite;
-  }
-  
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.5);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  
-
-  .warning {
-    display: block;
-    color: red;
+ 
+  p {
+    margin-bottom: 20px;
     font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 20px;
-    animation: fadeOut 5s forwards; 
+    color: #666;
   }
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
+ 
+  .dialog-buttons {
+    display: flex;
+    justify-content: space-around;
+ 
+    button {
+      font-size: 14px;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+ 
+      &:hover {
+        transform: scale(1.05);
+      }
+ 
+      &:active {
+        transform: scale(0.95);
+      }
     }
-    100% {
-      opacity: 0;
+ 
+    .confirm-btn {
+      background-color: #ff4d4f;
+      color: white;
+ 
+      &:hover {
+        background-color: lighten(#ff4d4f, 5%);
+      }
+ 
+      &:active {
+        background-color: darken(#ff4d4f, 5%);
+      }
+    }
+ 
+    .cancel-btn {
+      background-color: #4caf50;
+      color: white;
+ 
+      &:hover {
+        background-color: lighten(#4caf50, 5%);
+      }
+ 
+      &:active {
+        background-color: darken(#4caf50, 5%);
+      }
     }
   }
-  
+}
 
+/* General Styling */
+// body {
+//   font-family: 'Roboto', sans-serif;
+//   background-color: #f8f9fa;
+//   color: #333;
+//   margin: 0;
+//   padding: 0;
+// }
 
-  
+// /* Navigation Bar */
+// .nav {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 10px 20px;
+//   background-color: #FFC0CB;
+//   color: #fff;
+// }
+
+// .nav .logo {
+//   display: flex;
+//   align-items: center;
+// }
+
+// .nav .logo img {
+//   height: 40px;
+//   margin-right: 10px;
+// }
+
+// .timer {
+//   font-size: 18px;
+// }
+
+// .end-interview {
+//   background-color: #ff5722;
+//   color: #fff;
+//   border: none;
+//   padding: 10px 15px;
+//   border-radius: 5px;
+//   cursor: pointer;
+// }
+
+// /* Main Content */
+// .interview-page {
+//   display: flex;
+//   gap: 20px;
+//   padding: 20px;
+// }
+
+// .left-column, .right-column {
+//   flex: 1;
+// }
+
+// .code-editor {
+//   background: #fff;
+//   border: 1px solid #ddd;
+//   border-radius: 8px;
+//   overflow: hidden;
+// }
+
+// .editor-toolbar {
+//   display: flex;
+//   justify-content: space-around;
+//   background-color: #f1f1f1;
+//   padding: 10px 0;
+// }
+
+// .editor-container textarea {
+//   width: 100%;
+//   height: 300px;
+//   border: none;
+//   padding: 10px;
+//   font-family: 'Courier New', Courier, monospace;
+// }
+
+// .btn-container {
+//   display: flex;
+//   justify-content: flex-end;
+//   gap: 10px;
+//   padding: 10px;
+// }
+
+// /* Right Column */
+// .chat-box {
+//   max-height: 300px;
+//   overflow-y: auto;
+//   background: #f9f9f9;
+//   padding: 10px;
+//   border-radius: 8px;
+//   border: 1px solid #ddd;
+// }
+
+// .chat-input {
+//   display: flex;
+//   align-items: center;
+//   margin-top: 10px;
+// }
+
+// .chat-input .input {
+//   flex: 1;
+//   padding: 10px;
+//   border: 1px solid #ddd;
+//   border-radius: 5px;
+// }
+
+// .sendButton, .sendVoice {
+//   margin-left: 10px;
+//   cursor: pointer;
+// }
